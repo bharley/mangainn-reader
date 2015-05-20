@@ -74,10 +74,12 @@ renderWebtoon = (res, chapter) ->
 
   # Fetch the first image and the number of pages we need
   http.read(url).then (body) ->
-    $     = cheerio.load body
-    title = $('#gotomangainfo2').text().replace(/^[ -]+/, '')
-    pages = [$('#imgPage').attr('src')]
-    num   = $('#cmbpages option:last-child').text()
+    $        = cheerio.load body
+    title    = $('#gotomangainfo2').text().replace(/^[ -]+/, '')
+    pages    = [$('#imgPage').attr('src')]
+    num      = $('#cmbpages option:last-child').text()
+    previous = $('#chapters option[selected]').prev().val()
+    next     = $('#chapters option[selected]').next().val()
     
     # Fetch each image
     q.all([2..num].map (i) -> http.read(url + "/page_#{i}")).then (bodies) ->
@@ -86,7 +88,7 @@ renderWebtoon = (res, chapter) ->
         $d = cheerio.load data
         pages.push $d('#imgPage').attr('src')
 
-      res.render 'webtoon', {title, pages}
+      res.render 'webtoon', {title, pages, previous, next}
 
 
 ###

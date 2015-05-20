@@ -1,7 +1,30 @@
 
-<h1>{{title}}</h1>
+<h1>
+    {{#if previous}}
+    <a href="/m/{{previous}}" class="pure-button previous-button">&lt;</a>
+    {{/if}}
+    {{#if next}}
+    <a href="/m/{{next}}" class="pure-button next-button">&lt;</a>
+    {{/if}}
+    {{title}}
+</h1>
 <ul class="page-list">
     {{#each pages}}
     <li><img src="{{this}}" class="pure-img" alt="Page {{@index}}"/></li>
     {{/each}}
 </ul>
+
+<script>
+    document.onkeydown = function(e) {
+        e = e || window.event;
+
+        // If an arrow key was pressed, try to navigate
+        if (e.keyCode == 37 || e.keyCode == 39) {
+            var els = document.getElementsByClassName((e.keyCode == 37 ? 'previous' : 'next') + '-button');
+
+            if (els.length) {
+                els[0].click();
+            }
+        }
+    };
+</script>
