@@ -51,7 +51,6 @@ app.get '/m/:chapter', (req, res) ->
         $d = cheerio.load data
         pages.push $d('#imgPage').attr('src')
 
-      console.log pages
       res.render 'webtoon', {title, pages}
 
 
