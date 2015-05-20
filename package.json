@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "cheerio": "^0.19.0",
+    "coffee-script": "^1.9.2",
     "express": "^4.12.4",
     "express-hbs": "^0.8.4",
     "q": "^1.4.1",

@@ -60,7 +60,7 @@ app.get '/m/:chapter', (req, res) ->
 ###
 
 # Server
-server = app.listen 3000, ->
+server = app.listen (process.env.PORT || 3000), ->
 
   host = server.address().address
   port = server.address().port
