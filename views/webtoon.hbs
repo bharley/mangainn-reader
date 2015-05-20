@@ -1,10 +1,10 @@
 
 <h1>
     {{#if previous}}
-    <a href="/m/{{previous}}" class="pure-button previous-button">&lt;</a>
+    <a href="/c/{{previous}}" class="pure-button previous-button">&lt;</a>
     {{/if}}
     {{#if next}}
-    <a href="/m/{{next}}" class="pure-button next-button">&gt;</a>
+    <a href="/c/{{next}}" class="pure-button next-button">&gt;</a>
     {{/if}}
     {{title}}
 </h1>
@@ -13,6 +13,15 @@
     <li><img src="{{this}}" class="pure-img" alt="Page {{@index}}"/></li>
     {{/each}}
 </ul>
+<h1>
+    {{#if previous}}
+    <a href="/c/{{previous}}" class="pure-button previous-button">&lt;</a>
+    {{/if}}
+    {{#if next}}
+    <a href="/c/{{next}}" class="pure-button next-button">&gt;</a>
+    {{/if}}
+    {{title}}
+</h1>
 
 <script>
     document.onkeydown = function(e) {

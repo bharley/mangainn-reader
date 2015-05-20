@@ -38,12 +38,12 @@ app.get '/', (req, res) ->
 
 
 # Displays a chapter
-app.get '/m/:chapter', (req, res) ->
+app.get '/c/:chapter', (req, res) ->
   renderWebtoon res, req.params.chapter
 
 
 # Jump point for the latest chapter of a manga
-app.get '/:title', (req, res) ->
+app.get '/m/:title', (req, res) ->
   # Grab the manga and make sure it exists
   manga = mangas[req.params.title]
   if not manga? then res.send 'Not found'
