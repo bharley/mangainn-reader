@@ -45,23 +45,41 @@ app.get '/c/:chapter', (req, res) ->
 # Jump point for the latest chapter of a manga
 app.get '/m/:title', (req, res) ->
   # Grab the manga and make sure it exists
-  manga = mangas[req.params.title]
-  if not manga? then res.send 'Not found'
+  slug = if mangas[req.params.title]?
+    mangas[req.params.title].slug
+  else
+    req.params.title
 
   # The main manga's url
-  url = mangainn + manga.slug
+  url = mangainn + slug
 
   # Fetch the page listing all of the chapters so we can get the latest one
   http.read(url).then (body) ->
-    $           = cheerio.load body
-    chapterUrl  = $('.content > div:last-child > table > tr:last-child > td:first-child > span > a').attr('href')
-    chapter     = chapterUrl.match(new RegExp("^#{mangainn}chapter/(.*)$"))?[1]
+    $          = cheerio.load body
+    chapterUrl = $('.content > div:last-child > table > tr:last-child > td:first-child > span > a').attr('href')
+    chapter    = chapterUrl.match(new RegExp("^#{mangainn}chapter/(.*)$"))?[1]
     
     # Error out if we didn't get anything
     if not chapter? then res.send "Error fetching latest chapter slug (#{chapterUrl})."
 
     # Render the latest chapter
     renderWebtoon res, chapter
+
+
+# Parses out links from MangaInn into something useful
+app.get '/q', (req, res) ->
+  url = req.query.url
+
+  # First see if we've been sent a link to a specific chapter
+  chapter = url.match(new RegExp('^(?:https?://)?(?:www\.)?mangainn\.me/manga/chapter/([^/]+)(?:/page_\\d+)?$'))?[1]
+  if chapter then return res.redirect "/c/#{chapter}"
+
+  # See if we were passed a title page
+  title = url.match(new RegExp('^(?:https?://)?(?:www\.)?mangainn\.me/manga/([^/]+)$'))?[1]
+  if title then return res.redirect "/m/#{title}"
+
+  # I don't understand this link
+  res.send 'Unknown link structure'
 
 
 ###
