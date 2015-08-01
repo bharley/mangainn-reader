@@ -71,10 +71,14 @@
         hammer.on('panleft panright', function(ev) {
             if (!ev) return;
 
-            if (!ev.isFinal) {
+            var angle = Math.abs(ev.angle);
+            if (angle <= 160 || angle >= 20) {
+                $rightArrow.css('right', '');
+                $leftArrow.css('left', '');
+            } else if (!ev.isFinal) {
                 // Animate the pulls
                 var pullDistance = 1 - Math.min(ev.distance / desiredDistance, 1);
-                if (pullDistance < 0.9) {
+                if (pullDistance < 0.88) {
                     if (ev.type === 'panleft') {
                         $rightArrow.css('right', '-' + pullDistance + 'em');
                         $leftArrow.css('left', '');
@@ -85,8 +89,7 @@
                 }
             } else {
                 // See if we had a valid swipe
-                var angle = Math.abs(ev.angle);
-                if (ev.distance >= desiredDistance && (angle > 160 || angle < 20)) {
+                if (ev.distance >= desiredDistance) {
                     if (ev.type === 'panleft') {
                         next();
                     } else {
