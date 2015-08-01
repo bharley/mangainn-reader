@@ -74,12 +74,14 @@
             if (!ev.isFinal) {
                 // Animate the pulls
                 var pullDistance = 1 - Math.min(ev.distance / desiredDistance, 1);
-                if (ev.type === 'panleft') {
-                    $rightArrow.css('right', '-' + pullDistance + 'em');
-                    $leftArrow.css('left', '');
-                } else {
-                    $leftArrow.css('left', '-' + pullDistance + 'em');
-                    $rightArrow.css('right', '');
+                if (pullDistance < 0.9) {
+                    if (ev.type === 'panleft') {
+                        $rightArrow.css('right', '-' + pullDistance + 'em');
+                        $leftArrow.css('left', '');
+                    } else {
+                        $leftArrow.css('left', '-' + pullDistance + 'em');
+                        $rightArrow.css('right', '');
+                    }
                 }
             } else {
                 // See if we had a valid swipe
