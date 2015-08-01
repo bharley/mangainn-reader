@@ -49,8 +49,29 @@
         .next-button {
             float: right;
         }
+
+        .arrow-left, .arrow-right {
+            position: absolute;
+            top: calc(50% - 0.5em);
+            height: 1em;
+            width: 1em;
+            background-color: rgba(0, 0, 0, 0.75);
+            color: #fff;
+            font-size: 5em;
+            line-height: 0.65em;
+        }
+
+        .arrow-left {
+            left: -1em;
+        }
+
+        .arrow-right {
+            right: -1em;
+        }
     </style>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.4/hammer.min.js"></script>
 </head>
 <body>
 
