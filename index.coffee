@@ -3,11 +3,15 @@
 ###
 
 # Includes
-express = require 'express'
-hbs     = require 'express-hbs'
-q       = require 'q'
-http    = require 'q-io/http'
-cheerio = require 'cheerio'
+express  = require 'express'
+hbs      = require 'express-hbs'
+q        = require 'q'
+http     = require 'q-io/http'
+cheerio  = require 'cheerio'
+fs       = require 'fs'
+coffee   = require 'coffee-script'
+UglifyJs = require 'uglify-js'
+sass     = require 'node-sass'
 
 
 # Configuring express
@@ -80,6 +84,27 @@ app.get '/q', (req, res) ->
 
   # I don't understand this link
   res.send 'Unknown link structure'
+
+
+###
+  Handlebarsjs Helpers
+###
+
+# Inlines an include
+hbs.registerHelper 'include', (opts) ->
+  fs.readFileSync "includes/#{opts.fn(@)}"
+
+# Transpiles and minifies CoffeeSciprt (for inline scripts)
+hbs.registerHelper 'coffee', (opts) ->
+  min = UglifyJs.minify coffee.compile(opts.fn(@), bare: true), fromString: true
+  min.code
+
+# Transpiles and minifies Sass (for inline styles)
+hbs.registerHelper 'sass', (opts) ->
+  result = sass.renderSync
+    data:        opts.fn @
+    outputStyle: 'compressed'
+  result.css.toString()
 
 
 ###

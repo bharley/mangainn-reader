@@ -1,0 +1,64 @@
+html {
+    overflow-x: hidden;
+}
+
+h1 {
+    text-align: center;
+}
+
+.manga-list,
+.page-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.manga-list li {
+    text-align: center;
+    padding: 4px 0;
+
+    .pure-button {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+.page-list li {
+    margin: 0;
+    padding: 0;
+
+    img {
+        margin: 0 auto;
+    }
+}
+
+.previous-button, .next-button {
+    font-size: 50%;
+}
+
+.previous-button {
+    float: left;
+}
+
+.next-button {
+    float: right;
+}
+
+.arrow-left, .arrow-right {
+    position: fixed;
+    top: calc(50% - 0.5em);
+    height: 1em;
+    width: 1em;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    font-size: 5em;
+    line-height: 1em;
+}
+
+.arrow-left {
+    left: -1em;
+}
+
+.arrow-right {
+    right: -1em;
+}
