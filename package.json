@@ -4,6 +4,7 @@
   "description": "Manga Inn webtoon-style reader",
   "main": "index.coffee",
   "scripts": {
+    "start": "coffee index.coffee",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Blake Harley",

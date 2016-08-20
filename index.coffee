@@ -23,7 +23,7 @@ app.set 'views', "#{__dirname}/views"
 
 
 # Some helpful variables
-mangainn = 'http://www.mangainn.me/manga/'
+mangainn = 'http://www.mangainn.net/manga/'
 mangas = # Poor man's database
   magician:
     title: 'Magician'
@@ -62,7 +62,7 @@ app.get '/m/:title', (req, res) ->
     $          = cheerio.load body
     chapterUrl = $('.content > div:last-child > table > tr:last-child > td:first-child > span > a').attr('href')
     chapter    = chapterUrl.match(new RegExp("^#{mangainn}chapter/(.*)$"))?[1]
-    
+
     # Error out if we didn't get anything
     if not chapter? then res.send "Error fetching latest chapter slug (#{chapterUrl})."
 
@@ -75,11 +75,11 @@ app.get '/q', (req, res) ->
   url = req.query.url
 
   # First see if we've been sent a link to a specific chapter
-  chapter = url.match(new RegExp('^(?:https?://)?(?:www\.)?mangainn\.me/manga/chapter/([^/]+)(?:/page_\\d+)?$'))?[1]
+  chapter = url.match(new RegExp('^(?:https?://)?(?:www\.)?mangainn\.[a-zA-Z]+/manga/chapter/([^/]+)(?:/page_\\d+)?$'))?[1]
   if chapter then return res.redirect "/c/#{chapter}"
 
   # See if we were passed a title page
-  title = url.match(new RegExp('^(?:https?://)?(?:www\.)?mangainn\.me/manga/([^/]+)$'))?[1]
+  title = url.match(new RegExp('^(?:https?://)?(?:www\.)?mangainn\.[a-zA-Z]+/manga/([^/]+)$'))?[1]
   if title then return res.redirect "/m/#{title}"
 
   # I don't understand this link
@@ -123,7 +123,7 @@ renderWebtoon = (res, chapter) ->
     num      = $('#cmbpages option:last-child').text()
     previous = $('#chapters option[selected]').prev().val()
     next     = $('#chapters option[selected]').next().val()
-    
+
     # Fetch each image
     q.all([2..num].map (i) -> http.read(url + "/page_#{i}")).then (bodies) ->
       # Comb through all the promises
